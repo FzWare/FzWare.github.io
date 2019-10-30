@@ -68,14 +68,53 @@ FzWARE            </a>
     <div class="row">
         <div class="col-lg-12">
             <article>
+                <h2><a href="/raspberry-pi-integration.html">Raspberry Pi Integration</a></h2>
+                <div class="summary"><div class="section" id="zrc-provide-a-simple-api-for-bluetooth-wireless-control">
+<h2>ZRC provide a simple API for bluetooth wireless control.</h2>
+<p>Write 2 Bytes payload to ATT handle 0x26, ZRC will send out IR code as if some button been pressed.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="29%" />
+<col width="52%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Index</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>0</td>
+<td>0x02</td>
+<td>Command Code</td>
+</tr>
+<tr><td>1</td>
+<td>Button Number</td>
+<td>00 - Digit 0, 01 - Digit 1, ...</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="prerequisite">
+<h2>Prerequisite</h2>
+<blockquote>
+<ol class="arabic simple">
+<li><dl class="first docutils">
+<dt>ZRC been configured.</dt>
+<dd>Make …</dd></dl></li></ol></blockquote></div>
+                    <a class="btn btn-default btn-xs" href="/raspberry-pi-integration.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="/fzremote.html">FzRemote</a></h2>
                 <div class="summary"><h3>Specification</h3>
 <ol>
 <li>BLE (Bluetooth 4.0 Smart) for efficient and fast communication with your phone / tablet</li>
 <li>CC2640 by Texas Instruments chip for a reliable BLE stack and ideal performance</li>
 <li>2xAAA batteries - lasts 6 months, even longer in <a href="/fzremote-working-modes.html">remote control only mode</a>  </li>
-<li>Support TV, DVD, Bluray, Audio, Projector, Fan ...  </li>
-<li>UNIVERSAL Control over …</li></ol>
+<li>Support TV, DVD, Bluray, Audio, Projector, and a lot of …</li></ol>
                     <a class="btn btn-default btn-xs" href="/fzremote.html">more ...</a>
                 </div>
             </article>

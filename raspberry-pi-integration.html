@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Raspberry Pi Integration - FzWARE</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="/raspberry-pi-integration.html">
+
+        <meta name="author" content="FounderSG" />
+        <meta name="description" content="ZRC provide a simple API for bluetooth wireless control. Write 2 Bytes payload to ATT handle 0x26, ZRC will send out IR code as if some button been pressed. Index Value Description 0 0x02 Command Code 1 Button Number 00 - Digit 0, 01 - Digit 1, ... Prerequisite ZRC been configured. Make …" />
+
+        <meta property="og:site_name" content="FzWARE" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Raspberry Pi Integration"/>
+        <meta property="og:url" content="/raspberry-pi-integration.html"/>
+        <meta property="og:description" content="ZRC provide a simple API for bluetooth wireless control. Write 2 Bytes payload to ATT handle 0x26, ZRC will send out IR code as if some button been pressed. Index Value Description 0 0x02 Command Code 1 Button Number 00 - Digit 0, 01 - Digit 1, ... Prerequisite ZRC been configured. Make …"/>
+        <meta property="article:published_time" content="2019-10-03" />
+            <meta property="article:section" content="Product" />
+            <meta property="article:author" content="FounderSG" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="/theme/css/bootstrap.united.min.css" type="text/css"/>
+    <link href="/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="/theme/css/pygments/native.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/css/style.css" type="text/css"/>
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">
+FzWARE            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                    <li><a href="/category/support.html">Support</a></li>
+                    <li><a href="/faq.html">FAQ</a></li>
+                    <li><a href="/category/blog.html">Blog</a></li>
+                    <li><a href="/contact-us.html">Contact Us</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="/raspberry-pi-integration.html"
+                       rel="bookmark"
+                       title="Permalink to Raspberry Pi Integration">
+                        Raspberry Pi Integration
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="section" id="zrc-provide-a-simple-api-for-bluetooth-wireless-control">
+<h2>ZRC provide a simple API for bluetooth wireless control.</h2>
+<p>Write 2 Bytes payload to ATT handle 0x26, ZRC will send out IR code as if some button been pressed.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="29%" />
+<col width="52%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Index</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>0</td>
+<td>0x02</td>
+<td>Command Code</td>
+</tr>
+<tr><td>1</td>
+<td>Button Number</td>
+<td>00 - Digit 0, 01 - Digit 1, ...</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="prerequisite">
+<h2>Prerequisite</h2>
+<blockquote>
+<ol class="arabic simple">
+<li><dl class="first docutils">
+<dt>ZRC been configured.</dt>
+<dd>Make sure press button can control the device.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Disconnect from FzRemote App.</dt>
+<dd>Bluetooth peripheral can have only one connection, disconnect from FzRemote App so that Raspberry Pi can connect to it. You can take iPhone far alway from the remote control, or you can kill the App.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Bluetooth up and running on Raspberry Pi.</dt>
+<dd>Note - Old Raspberry Pi have no build-in bluetooth, USB bluetooth 4.0 adapter required in that case.</dd>
+</dl>
+</li>
+</ol>
+</blockquote>
+</div>
+<div class="section" id="scan-to-find-out-mac-address">
+<h2>Scan to find out mac address.</h2>
+<div class="highlight"><pre><span></span>host$ bluetoothctl
+<span class="o">[</span>NEW<span class="o">]</span> Controller <span class="m">00</span>:02:72:CC:A9:67 ubuntu <span class="o">[</span>default<span class="o">]</span>
+<span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># scan on</span>
+Discovery started
+<span class="o">[</span>CHG<span class="o">]</span> Controller <span class="m">00</span>:02:72:CC:A9:67 Discovering: yes
+<span class="o">[</span>NEW<span class="o">]</span> Device <span class="m">00</span>:81:F9:B6:D3:27 ZRC
+<span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># scan off</span>
+Discovery stopped
+<span class="o">[</span>CHG<span class="o">]</span> Controller <span class="m">00</span>:02:72:CC:A9:67 Discovering: no
+<span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># exit</span>
+</pre></div>
+</div>
+<div class="section" id="send-ir">
+<h2>Send IR.</h2>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pexpect</span><span class="o">,</span> <span class="nn">time</span>
+
+<span class="n">gatt</span> <span class="o">=</span> <span class="n">pexpect</span><span class="o">.</span><span class="n">spawn</span><span class="p">(</span><span class="s2">&quot;gatttool -b 00:81:F9:B6:D3:27 -I&quot;</span><span class="p">)</span>
+<span class="n">gatt</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s2">&quot;connect&quot;</span><span class="p">)</span>
+<span class="n">gatt</span><span class="o">.</span><span class="n">expect</span><span class="p">(</span><span class="s2">&quot;Connection successful&quot;</span><span class="p">)</span>
+<span class="n">gatt</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s2">&quot;char-write-cmd 26 0201&quot;</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">gatt</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s2">&quot;disconnect&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="list-of-button-number">
+<h2>List of Button Number</h2>
+<div class="highlight"><pre><span></span><span class="c1">#define KEY_DIGIT_0         0</span>
+<span class="c1">#define KEY_DIGIT_1         1</span>
+<span class="c1">#define KEY_DIGIT_2         2</span>
+<span class="c1">#define KEY_DIGIT_3         3</span>
+<span class="c1">#define KEY_DIGIT_4         4</span>
+<span class="c1">#define KEY_DIGIT_5         5</span>
+<span class="c1">#define KEY_DIGIT_6         6</span>
+<span class="c1">#define KEY_DIGIT_7         7</span>
+<span class="c1">#define KEY_DIGIT_8         8</span>
+<span class="c1">#define KEY_DIGIT_9         9</span>
+<span class="c1">#define KEY_POWER           10</span>
+<span class="c1">#define KEY_STAR            11</span>
+<span class="c1">#define KEY_SEARCH          12</span>
+<span class="c1">#define KEY_CURSOR_UP       13</span>
+<span class="c1">#define KEY_CURSOR_DOWN     14</span>
+<span class="c1">#define KEY_CURSOR_LEFT     15</span>
+<span class="c1">#define KEY_CURSOR_RIGHT    16</span>
+<span class="c1">#define KEY_OK              17</span>
+<span class="c1">#define KEY_REWIND          18</span>
+<span class="c1">#define KEY_STOP            19</span>
+<span class="c1">#define KEY_PLAY            20</span>
+<span class="c1">#define KEY_FORWARD         21</span>
+<span class="c1">#define KEY_VOLUME_PLUS     22</span>
+<span class="c1">#define KEY_VOLUME_MINUS    23</span>
+<span class="c1">#define KEY_MUTE            24</span>
+<span class="c1">#define KEY_CHANNEL_PLUS    25</span>
+<span class="c1">#define KEY_CHANNEL_MINUS   26</span>
+<span class="c1">#define KEY_RETURN          27</span>
+<span class="c1">#define KEY_EXIT            28</span>
+<span class="c1">#define KEY_RED             29</span>
+<span class="c1">#define KEY_GREEN           30</span>
+<span class="c1">#define KEY_YELLOW          31</span>
+<span class="c1">#define KEY_BLUE            32</span>
+<span class="c1">#define KEY_INFO            33</span>
+</pre></div>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2019 FounderSG
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="/theme/js/respond.min.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-132774192-2']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <!-- End Google Analytics Code -->
+
+
+</body>
+</html>
